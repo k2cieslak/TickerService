@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = " io.github.k2cieslak.cryptoticker.tickerservice.marketdata")
 public class AppConfiguration {
 
     @Bean

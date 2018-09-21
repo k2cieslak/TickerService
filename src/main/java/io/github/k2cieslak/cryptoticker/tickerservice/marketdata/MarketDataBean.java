@@ -24,21 +24,16 @@ public class MarketDataBean {
     }
 
 
-    public Ticker getTicker(String exchangeName, String currencyPair) {
+    public Ticker getTicker(String exchangeName, String currencyPair) throws TickerServiceException {
 
-        String[] currencies = currencyPair.split("_");
-        Currency base = new Currency(currencies[0]);
-        Currency counter = new Currency(currencies[1]);
-        CurrencyPair market = new CurrencyPair(base, counter);
-
+        CurrencyPair market = parseCurrencyPair(currencyPair);
         MarketDataService marketDataService = exchanges.get(exchangeName);
 
         Ticker ticker = null;
         try {
             ticker = marketDataService.getTicker(market);
         } catch (IOException e) {
-            //TODO use logback
-            e.printStackTrace();
+            throw new TickerServiceException("Problem while communicating with exchange.");
         }
 
         return ticker;
@@ -52,7 +47,7 @@ public class MarketDataBean {
                 Currency counter = new Currency(currencies[1]);
                 CurrencyPair market = new CurrencyPair(base, counter);
                 return market;
-            } else throw new TickerServiceException();
-        } else throw new TickerServiceException();
+            } else throw new TickerServiceException("Currency pair - wrong format.");
+        } else throw new TickerServiceException("Currency pair - wrong format.");
     }
 }

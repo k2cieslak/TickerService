@@ -17,7 +17,12 @@ public class MarketDataBeanTest {
     @Test
     @DisplayName("To show that rendom generic case works")
     void getTickerSmokeTest() {
-        Ticker ticker = marketDataBean.getTicker("hitbtc", "BTC_USD");
+        Ticker ticker = null;
+        try {
+            ticker = marketDataBean.getTicker("hitbtc", "BTC_USD");
+        } catch (TickerServiceException e) {
+            e.printStackTrace();
+        }
         assertNotNull(ticker);
     }
 
