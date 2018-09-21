@@ -22,7 +22,8 @@ public class MarketDataBean {
         exchanges = MarketDataRegistry.buildMarketDataSources();
 
         String startMessage = String.format("================ INIT IN %d" , System.currentTimeMillis()-startTime);
-        logger.info(startMessage);
+        //TODO exception levels
+        logger.error(startMessage);
     }
 
 
