@@ -5,22 +5,24 @@ import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.service.marketdata.MarketDataService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MarketDataBean {
 
-    private Map<String, MarketDataService> exchanges = new HashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
+    private final Map<String, MarketDataService> exchanges;
 
     public MarketDataBean() {
         long startTime = System.currentTimeMillis();
 
         exchanges = MarketDataRegistry.buildMarketDataSources();
 
-        //TODO use logback / update actuator
-        System.out.println("================ INIT IN " + (System.currentTimeMillis()-startTime));
+        String startMessage = String.format("================ INIT IN %d" , System.currentTimeMillis()-startTime);
+        logger.info(startMessage);
     }
 
 
@@ -33,7 +35,7 @@ public class MarketDataBean {
             throw new TickerServiceException("Exchange name - misspeled or not supported exchange.");
         }
 
-        Ticker ticker = null;
+        Ticker ticker;
         try {
             ticker = marketDataService.getTicker(market);
         } catch (IOException e) {

@@ -17,7 +17,7 @@ import javax.ws.rs.QueryParam;
 public class TickerController {
 
     @Autowired
-    MarketDataBean marketData;
+    private MarketDataBean marketData;
 
     @GET
     @Produces("application/json")

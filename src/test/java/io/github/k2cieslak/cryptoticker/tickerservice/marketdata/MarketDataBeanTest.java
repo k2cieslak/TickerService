@@ -9,20 +9,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MarketDataBeanTest {
 
-    static MarketDataBean marketDataBean =  new MarketDataBean();
+    private static final MarketDataBean marketDataBean =  new MarketDataBean();
     private static final String COMMON_CURRENCY_PAIR = "BTC_USD";
+    private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
 
     @Test
-    @DisplayName("To show that rendom generic case works")
+    @DisplayName("To show that random generic case works")
     void getTickerSmokeTest() {
         Ticker ticker = null;
         try {
             ticker = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
-            e.printStackTrace();
+            logger.warn(e.toString());
         }
         assertNotNull(ticker);
     }
@@ -41,7 +44,7 @@ public class MarketDataBeanTest {
         try {
             currencyPair = marketDataBean.parseCurrencyPair(COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
-            e.printStackTrace();
+            logger.warn(e.toString());
         }
         assertEquals(CurrencyPair.BTC_USD, currencyPair);
     }

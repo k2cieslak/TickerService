@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class TickerService {
+class TickerService {
 
     public static void main(String[] args) {
         SpringApplication.run(TickerService.class, args);

@@ -9,7 +9,6 @@ import org.knowm.xchange.bitbay.BitbayExchange;
 import org.knowm.xchange.bitfinex.v2.BitfinexExchange;
 import org.knowm.xchange.bitstamp.BitstampExchange;
 import org.knowm.xchange.bittrex.BittrexExchange;
-import org.knowm.xchange.gdax.GDAXExchange;
 import org.knowm.xchange.gemini.v1.GeminiExchange;
 import org.knowm.xchange.hitbtc.v2.HitbtcExchange;
 import org.knowm.xchange.kraken.KrakenExchange;
@@ -20,13 +19,13 @@ import org.known.xchange.acx.AcxExchange;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MarketDataRegistry {
+class MarketDataRegistry {
 
     private MarketDataRegistry() {
 
     }
 
-    //12 na 83
+    //11 na 82
     public static Map<String, MarketDataService> buildMarketDataSources() {
         Map<String, MarketDataService> exchanges = new HashMap<>();
 
@@ -60,10 +59,6 @@ public class MarketDataRegistry {
         MarketDataService bittrexMDS = bittrex.getMarketDataService();
         exchanges.put("bittrex", bittrexMDS);
 
-        Exchange gdax = ExchangeFactory.INSTANCE.createExchange(GDAXExchange.class.getName());
-        MarketDataService gdaxMDS = gdax.getMarketDataService();
-        exchanges.put("gdax", gdaxMDS);
-
         Exchange gemini = ExchangeFactory.INSTANCE.createExchange(GeminiExchange.class.getName());
         MarketDataService geminiMDS = gemini.getMarketDataService();
         exchanges.put("gemini", geminiMDS);
@@ -76,7 +71,6 @@ public class MarketDataRegistry {
         MarketDataService krakenMDS = kraken.getMarketDataService();
         exchanges.put("kraken", krakenMDS);
 
-        //TODO strange response
         Exchange poloniex = ExchangeFactory.INSTANCE.createExchange(PoloniexExchange.class.getName());
         MarketDataService poloniexMDS = poloniex.getMarketDataService();
         exchanges.put("poloniex", poloniexMDS);
