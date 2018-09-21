@@ -29,6 +29,10 @@ public class MarketDataBean {
         CurrencyPair market = parseCurrencyPair(currencyPair);
         MarketDataService marketDataService = exchanges.get(exchangeName);
 
+        if(marketDataService == null) {
+            throw new TickerServiceException("Exchange name - misspeled or not supported exchange.");
+        }
+
         Ticker ticker = null;
         try {
             ticker = marketDataService.getTicker(market);
@@ -45,8 +49,7 @@ public class MarketDataBean {
             if(currencies.length == 2) {
                 Currency base = new Currency(currencies[0]);
                 Currency counter = new Currency(currencies[1]);
-                CurrencyPair market = new CurrencyPair(base, counter);
-                return market;
+                return new CurrencyPair(base, counter);
             } else throw new TickerServiceException("Currency pair - wrong format.");
         } else throw new TickerServiceException("Currency pair - wrong format.");
     }

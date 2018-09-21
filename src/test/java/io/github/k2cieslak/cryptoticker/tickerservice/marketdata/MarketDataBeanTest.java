@@ -13,13 +13,14 @@ import org.knowm.xchange.dto.marketdata.Ticker;
 public class MarketDataBeanTest {
 
     static MarketDataBean marketDataBean =  new MarketDataBean();
+    private static final String COMMON_CURRENCY_PAIR = "BTC_USD";
 
     @Test
     @DisplayName("To show that rendom generic case works")
     void getTickerSmokeTest() {
         Ticker ticker = null;
         try {
-            ticker = marketDataBean.getTicker("hitbtc", "BTC_USD");
+            ticker = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             e.printStackTrace();
         }
@@ -27,11 +28,18 @@ public class MarketDataBeanTest {
     }
 
     @Test
+    @DisplayName("Tests exception when exchangeName is wrong")
+    void getTickerForWrongExchangeSymbolTest() {
+        assertThrows(TickerServiceException.class,
+                () -> marketDataBean.getTicker("xxx", COMMON_CURRENCY_PAIR));
+    }
+
+    @Test
     @DisplayName("Currency pair converter :: Happy case for ")
     void parseCurrencyPairSmokeTest() {
         CurrencyPair currencyPair = null;
         try {
-            currencyPair = marketDataBean.parseCurrencyPair("BTC_USD");
+            currencyPair = marketDataBean.parseCurrencyPair(COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             e.printStackTrace();
         }
@@ -43,8 +51,6 @@ public class MarketDataBeanTest {
     @DisplayName("Currency pair converter :: malformed inputs")
     void parseCurrencyPairMalformedInputTest(String input) {
         assertThrows(TickerServiceException.class,
-                () -> {
-                    marketDataBean.parseCurrencyPair(input);
-                });
+                () -> marketDataBean.parseCurrencyPair(input));
     }
 }

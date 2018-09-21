@@ -22,6 +22,10 @@ import java.util.Map;
 
 public class MarketDataRegistry {
 
+    private MarketDataRegistry() {
+
+    }
+
     //12 na 83
     public static Map<String, MarketDataService> buildMarketDataSources() {
         Map<String, MarketDataService> exchanges = new HashMap<>();
@@ -32,13 +36,12 @@ public class MarketDataRegistry {
         acx.applySpecification(spec);
         exchanges.put("acx", acxMDS);
 
-        //TODO cos nie dziala
         Exchange anx = ExchangeFactory.INSTANCE.createExchange(ANXExchange.class.getName());
-        MarketDataService anxMDS = acx.getMarketDataService();
+        MarketDataService anxMDS = anx.getMarketDataService();
         exchanges.put("anx", anxMDS);
 
         Exchange bibox = ExchangeFactory.INSTANCE.createExchange(BiboxExchange.class.getName());
-        MarketDataService biboxMDS = acx.getMarketDataService();
+        MarketDataService biboxMDS = bibox.getMarketDataService();
         exchanges.put("bibox", biboxMDS);
 
         Exchange bitbay = ExchangeFactory.INSTANCE.createExchange(BitbayExchange.class.getName());
