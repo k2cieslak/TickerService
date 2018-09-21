@@ -1,5 +1,6 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
+import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
@@ -41,5 +42,17 @@ public class MarketDataBean {
         }
 
         return ticker;
+    }
+
+    CurrencyPair parseCurrencyPair(String input) throws TickerServiceException {
+        if(input != null && input.length() > 3 && input.contains("_")) {
+            String[] currencies = input.split("_");
+            if(currencies.length == 2) {
+                Currency base = new Currency(currencies[0]);
+                Currency counter = new Currency(currencies[1]);
+                CurrencyPair market = new CurrencyPair(base, counter);
+                return market;
+            } else throw new TickerServiceException();
+        } else throw new TickerServiceException();
     }
 }
