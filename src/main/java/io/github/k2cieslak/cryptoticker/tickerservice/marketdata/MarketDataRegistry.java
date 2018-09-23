@@ -81,10 +81,7 @@ import org.slf4j.LoggerFactory;
 import org.xchange.bitz.BitZExchange;
 import org.xchange.coinegg.CoinEggExchange;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -175,6 +172,10 @@ class MarketDataRegistry {
 
     private MarketDataRegistry() {
 
+    }
+
+    static Set<String> getAllExchangeNames() {
+        return exchangeSpec.keySet();
     }
 
     static Map<String, MarketDataService> buildMarketDataSources() {

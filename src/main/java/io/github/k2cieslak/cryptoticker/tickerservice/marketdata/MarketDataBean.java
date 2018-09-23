@@ -9,21 +9,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MarketDataBean {
 
     private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
     private final Map<String, MarketDataService> exchanges;
+    private Map<String, Map<CurrencyPair, Ticker>> cachedTickers;
 
     public MarketDataBean() {
         long startTime = System.currentTimeMillis();
 
         exchanges = MarketDataRegistry.buildMarketDataSources();
 
-        String startMessage = String.format("================ INIT IN %d" , System.currentTimeMillis()-startTime);
+        String startMessage = String.format("================ INIT OF %d EXCHANGES IN %d" , exchanges.size(), System.currentTimeMillis()-startTime);
         //TODO exception levels
-        logger.error(startMessage);
+        logger.info(startMessage);
     }
 
 
@@ -44,6 +47,24 @@ public class MarketDataBean {
         }
 
         return ticker;
+    }
+
+    public List<String> getAvaliableExchanges() {
+        List<String> result = new ArrayList<>();
+        result.addAll(exchanges.keySet());
+        return result;
+    }
+
+    public List<String> getGrayExchanges() {
+        List<String> result = new ArrayList<>();
+
+        for(String exchangeName : MarketDataRegistry.getAllExchangeNames()) {
+            if(!exchanges.containsKey(exchangeName)) {
+                result.add(exchangeName);
+            }
+        }
+
+        return result;
     }
 
     CurrencyPair parseCurrencyPair(String input) throws TickerServiceException {
