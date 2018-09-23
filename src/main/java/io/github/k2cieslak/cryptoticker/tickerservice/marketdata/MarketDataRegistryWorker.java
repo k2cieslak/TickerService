@@ -3,15 +3,18 @@ package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.exceptions.ExchangeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
 public class MarketDataRegistryWorker implements Supplier<ExchangeListEntry> {
 
+    private static final Logger logger = LoggerFactory.getLogger(MarketDataRegistryWorker.class);
     private String exchangeName;
     private Class exchangeProvider;
 
-    public MarketDataRegistryWorker(String exchangeName, Class exchangeProvider) {
+    MarketDataRegistryWorker(String exchangeName, Class exchangeProvider) {
         this.exchangeName = exchangeName;
         this.exchangeProvider = exchangeProvider;
     }
@@ -24,15 +27,16 @@ public class MarketDataRegistryWorker implements Supplier<ExchangeListEntry> {
     public ExchangeListEntry get() {
         ExchangeListEntry exchangeListEntry = new ExchangeListEntry();
         exchangeListEntry.setExchangeName(exchangeName);
-        Exchange exchange = null;
+
         try {
-            exchange = ExchangeFactory.INSTANCE.createExchange(exchangeProvider.getName());
-        } catch (ExchangeException exception) {
-            exception.printStackTrace();
-        }
-        if(exchange != null) {
+            Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exchangeProvider.getName());
             exchangeListEntry.setMarketDataService(exchange.getMarketDataService());
+        } catch (ExchangeException exception) {
+            logger.warn(exception.getMessage(), exception);
+        } catch (Exception exception) {
+            logger.error(exception.getMessage(), exception);
         }
+
         return exchangeListEntry;
     }
 }
