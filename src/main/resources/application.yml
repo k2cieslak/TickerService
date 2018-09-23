@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: CryptoTickerService
+server:
+  port: 8081
+logging:
+  level:
+    si.mazi.rescu: ERROR
+    root: INFO
+
