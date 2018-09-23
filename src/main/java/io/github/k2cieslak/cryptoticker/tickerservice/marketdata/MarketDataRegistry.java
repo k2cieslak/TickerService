@@ -1,8 +1,5 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
-import org.knowm.xchange.Exchange;
-import org.knowm.xchange.ExchangeFactory;
-import org.knowm.xchange.ExchangeSpecification;
 import org.knowm.xchange.anx.v2.ANXExchange;
 import org.knowm.xchange.bibox.BiboxExchange;
 import org.knowm.xchange.binance.BinanceExchange;
@@ -28,13 +25,61 @@ import org.knowm.xchange.campbx.CampBXExchange;
 import org.knowm.xchange.ccex.CCEXExchange;
 import org.knowm.xchange.cexio.CexIOExchange;
 import org.knowm.xchange.cobinhood.CobinhoodExchange;
+import org.knowm.xchange.coinbase.CoinbaseExchange;
+import org.knowm.xchange.coinbasepro.CoinbaseProExchange;
+import org.knowm.xchange.coinbene.CoinbeneExchange;
+import org.knowm.xchange.coindirect.CoindirectExchange;
+import org.knowm.xchange.coinfloor.CoinfloorExchange;
+import org.knowm.xchange.coingi.CoingiExchange;
+import org.knowm.xchange.coinmarketcap.CoinMarketCapExchange;
+import org.knowm.xchange.coinmate.CoinmateExchange;
+import org.knowm.xchange.coinone.CoinoneExchange;
+import org.knowm.xchange.coinsuper.CoinsuperExchange;
+import org.knowm.xchange.cryptonit2.CryptonitExchange;
+import org.knowm.xchange.cryptopia.CryptopiaExchange;
+import org.knowm.xchange.dsx.DSXExchange;
+import org.knowm.xchange.exmo.ExmoExchange;
+import org.knowm.xchange.exx.EXXExchange;
+import org.knowm.xchange.fcoin.FCoinExchange;
+import org.knowm.xchange.gatecoin.GatecoinExchange;
+import org.knowm.xchange.gateio.GateioExchange;
 import org.knowm.xchange.gemini.v1.GeminiExchange;
 import org.knowm.xchange.hitbtc.v2.HitbtcExchange;
+import org.knowm.xchange.huobi.HuobiExchange;
+import org.knowm.xchange.idex.IdexExchange;
+import org.knowm.xchange.independentreserve.IndependentReserveExchange;
+import org.knowm.xchange.itbit.v1.ItBitExchange;
+import org.knowm.xchange.koineks.KoineksExchange;
+import org.knowm.xchange.koinim.KoinimExchange;
 import org.knowm.xchange.kraken.KrakenExchange;
+import org.knowm.xchange.kucoin.KucoinExchange;
+import org.knowm.xchange.kuna.KunaExchange;
+import org.knowm.xchange.lakebtc.LakeBTCExchange;
+import org.knowm.xchange.liqui.LiquiExchange;
+import org.knowm.xchange.livecoin.LivecoinExchange;
+import org.knowm.xchange.luno.LunoExchange;
+import org.knowm.xchange.mercadobitcoin.MercadoBitcoinExchange;
+import org.knowm.xchange.oer.OERExchange;
+import org.knowm.xchange.okcoin.OkCoinExchange;
+import org.knowm.xchange.paribu.ParibuExchange;
+import org.knowm.xchange.paymium.PaymiumExchange;
 import org.knowm.xchange.poloniex.PoloniexExchange;
+import org.knowm.xchange.quadrigacx.QuadrigaCxExchange;
+import org.knowm.xchange.quoine.QuoineExchange;
+import org.knowm.xchange.ripple.RippleExchange;
 import org.knowm.xchange.service.marketdata.MarketDataService;
+import org.knowm.xchange.therock.TheRockExchange;
+import org.knowm.xchange.upbit.UpbitExchange;
+import org.knowm.xchange.vaultoro.VaultoroExchange;
+import org.knowm.xchange.vircurex.VircurexExchange;
+import org.knowm.xchange.wex.v3.WexExchange;
+import org.knowm.xchange.yobit.YoBitExchange;
+import org.knowm.xchange.zaif.ZaifExchange;
 import org.known.xchange.acx.AcxExchange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xchange.bitz.BitZExchange;
+import org.xchange.coinegg.CoinEggExchange;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,10 +90,11 @@ import java.util.concurrent.ExecutionException;
 
 class MarketDataRegistry {
 
-    private static final Map<String, Class> exchangeSpec = new HashMap<String, Class>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarketDataRegistry.class);
+    private static final Map<String, Class> exchangeSpec = new HashMap<>();
+
     static {
         exchangeSpec.put("ack", AcxExchange.class);
-
         exchangeSpec.put("anx", ANXExchange.class);
         exchangeSpec.put("bibox", BiboxExchange.class);
         exchangeSpec.put("binance", BinanceExchange.class);
@@ -75,24 +121,68 @@ class MarketDataRegistry {
         exchangeSpec.put("campbx", CampBXExchange.class);
         exchangeSpec.put("cexio", CexIOExchange.class);
         exchangeSpec.put("cobinhood", CobinhoodExchange.class);
-
+        exchangeSpec.put("cobinbase", CoinbaseExchange.class);
+        exchangeSpec.put("cobinbasepro", CoinbaseProExchange.class);
+        exchangeSpec.put("cobinbene", CoinbeneExchange.class);
+        exchangeSpec.put("coindirect", CoindirectExchange.class);
+        exchangeSpec.put("coinegg", CoinEggExchange.class);
+        exchangeSpec.put("coinfloor", CoinfloorExchange.class);
+        exchangeSpec.put("coingi", CoingiExchange.class);
+        exchangeSpec.put("coinmarketcap", CoinMarketCapExchange.class);
+        exchangeSpec.put("coinmate", CoinmateExchange.class);
+        exchangeSpec.put("coinone", CoinoneExchange.class);
+        exchangeSpec.put("coinsuper", CoinsuperExchange.class);
+        exchangeSpec.put("cryptonit", CryptonitExchange.class);
+        exchangeSpec.put("cryptopia", CryptopiaExchange.class);
+        exchangeSpec.put("dsx", DSXExchange.class);
+        exchangeSpec.put("exmo", ExmoExchange.class);
+        exchangeSpec.put("exx", EXXExchange.class);
+        exchangeSpec.put("fcoin", FCoinExchange.class);
+        exchangeSpec.put("gateio", GateioExchange.class);
+        exchangeSpec.put("gatecoin", GatecoinExchange.class);
         exchangeSpec.put("gemini", GeminiExchange.class);
         exchangeSpec.put("hitbtc", HitbtcExchange.class);
+        exchangeSpec.put("huobi", HuobiExchange.class);
+        exchangeSpec.put("idex", IdexExchange.class);
+        exchangeSpec.put("independantreserve", IndependentReserveExchange.class);
+        exchangeSpec.put("itbit", ItBitExchange.class);
+        exchangeSpec.put("koineks", KoineksExchange.class);
+        exchangeSpec.put("koinim", KoinimExchange.class);
         exchangeSpec.put("kraken", KrakenExchange.class);
+        exchangeSpec.put("kucoin", KucoinExchange.class);
+        exchangeSpec.put("kuna", KunaExchange.class);
+        exchangeSpec.put("lakebtc", LakeBTCExchange.class);
+        exchangeSpec.put("liqui", LiquiExchange.class);
+        exchangeSpec.put("livecoin", LivecoinExchange.class);
+        exchangeSpec.put("luno", LunoExchange.class);
+        exchangeSpec.put("mercadobitcoin", MercadoBitcoinExchange.class);
+        exchangeSpec.put("okcoin", OkCoinExchange.class);
+        exchangeSpec.put("openexchangerates", OERExchange.class);
+        exchangeSpec.put("paribu", ParibuExchange.class);
+        exchangeSpec.put("paymium", PaymiumExchange.class);
         exchangeSpec.put("poloniex", PoloniexExchange.class);
+        exchangeSpec.put("quadrigacx", QuadrigaCxExchange.class);
+        exchangeSpec.put("quoine", QuoineExchange.class);
+        exchangeSpec.put("ripple", RippleExchange.class);
+        exchangeSpec.put("therocktrading", TheRockExchange.class);
+        exchangeSpec.put("upbit", UpbitExchange.class);
+        exchangeSpec.put("vaultoro", VaultoroExchange.class);
+        exchangeSpec.put("vircurex", VircurexExchange.class);
+        exchangeSpec.put("wex", WexExchange.class);
+        exchangeSpec.put("yobit", YoBitExchange.class);
+        exchangeSpec.put("zaif", ZaifExchange.class);
     }
 
     private MarketDataRegistry() {
 
     }
 
-    //11 na 82
-    public static Map<String, MarketDataService> buildMarketDataSources() {
+    static Map<String, MarketDataService> buildMarketDataSources() {
         List<CompletableFuture<ExchangeListEntry>> exchangeThreadPool = new ArrayList<>();
         Map<String, MarketDataService> exchanges = new HashMap<>();
 
-        for(String exchangeName : exchangeSpec.keySet()) {
-            MarketDataRegistryWorker marketDataRegistryWorker = new MarketDataRegistryWorker(exchangeName, exchangeSpec.get(exchangeName));
+        for(Map.Entry e : exchangeSpec.entrySet()) {
+            MarketDataRegistryWorker marketDataRegistryWorker = new MarketDataRegistryWorker((String)e.getKey(), (Class)e.getValue());
             exchangeThreadPool.add(CompletableFuture.supplyAsync(marketDataRegistryWorker));
         }
 
@@ -104,62 +194,17 @@ class MarketDataRegistry {
             try {
                 exchangeListEntry = exchangeThread.get();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.error(e.toString(), e);
+                Thread.currentThread().interrupt();
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                LOGGER.error(e.toString(), e);
             }
+
             //TODO keep list of greyed exchanges and try to recover
             if(exchangeListEntry != null && exchangeListEntry.getMarketDataService() != null) {
                 exchanges.put(exchangeListEntry.getExchangeName(), exchangeListEntry.getMarketDataService());
             }
         }
-
-
-        //        Exchange acx = ExchangeFactory.INSTANCE.createExchange(AcxExchange.class.getName());
-//        MarketDataService acxMDS = acx.getMarketDataService();
-//        ExchangeSpecification spec = acx.getExchangeSpecification();
-//        acx.applySpecification(spec);
-//        exchanges.put("acx", acxMDS);
-//
-//        Exchange anx = ExchangeFactory.INSTANCE.createExchange(ANXExchange.class.getName());
-//        MarketDataService anxMDS = anx.getMarketDataService();
-//        exchanges.put("anx", anxMDS);
-//
-//        Exchange bibox = ExchangeFactory.INSTANCE.createExchange(BiboxExchange.class.getName());
-//        MarketDataService biboxMDS = bibox.getMarketDataService();
-//        exchanges.put("bibox", biboxMDS);
-//
-//        Exchange bitbay = ExchangeFactory.INSTANCE.createExchange(BitbayExchange.class.getName());
-//        MarketDataService bitbayMDS = bitbay.getMarketDataService();
-//        exchanges.put("bitbay", bitbayMDS);
-//
-//        Exchange bitfinex = ExchangeFactory.INSTANCE.createExchange(BitfinexExchange.class.getName());
-//        MarketDataService bitfinexMDS = bitfinex.getMarketDataService();
-//        exchanges.put("bitfinex", bitfinexMDS);
-//
-//        Exchange bitstamp = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
-//        MarketDataService bitstampMDS = bitstamp.getMarketDataService();
-//        exchanges.put("bitstamp", bitstampMDS);
-//
-//        Exchange bittrex = ExchangeFactory.INSTANCE.createExchange(BittrexExchange.class.getName());
-//        MarketDataService bittrexMDS = bittrex.getMarketDataService();
-//        exchanges.put("bittrex", bittrexMDS);
-//
-//        Exchange gemini = ExchangeFactory.INSTANCE.createExchange(GeminiExchange.class.getName());
-//        MarketDataService geminiMDS = gemini.getMarketDataService();
-//        exchanges.put("gemini", geminiMDS);
-//
-//        Exchange hitbtc = ExchangeFactory.INSTANCE.createExchange(HitbtcExchange.class.getName());
-//        MarketDataService hitbtcMDS = hitbtc.getMarketDataService();
-//        exchanges.put("hitbtc", hitbtcMDS);
-//
-//        Exchange kraken = ExchangeFactory.INSTANCE.createExchange(KrakenExchange.class.getName());
-//        MarketDataService krakenMDS = kraken.getMarketDataService();
-//        exchanges.put("kraken", krakenMDS);
-//
-//        Exchange poloniex = ExchangeFactory.INSTANCE.createExchange(PoloniexExchange.class.getName());
-//        MarketDataService poloniexMDS = poloniex.getMarketDataService();
-//        exchanges.put("poloniex", poloniexMDS);
 
         return exchanges;
     }
