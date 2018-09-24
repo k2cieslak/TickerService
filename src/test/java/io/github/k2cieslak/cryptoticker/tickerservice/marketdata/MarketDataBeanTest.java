@@ -56,4 +56,54 @@ public class MarketDataBeanTest {
         assertThrows(TickerServiceException.class,
                 () -> marketDataBean.parseCurrencyPair(input));
     }
+
+    @Test
+    @DisplayName("Testing ticker caching feature")
+    void getTickerFromCacheTest() {
+        Ticker ticker1 = null;
+        Ticker ticker2 = null;
+
+        try {
+            ticker1 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+        } catch (TickerServiceException e) {
+            logger.warn(e.toString());
+        }
+
+        try {
+            ticker2 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+        } catch (TickerServiceException e) {
+            logger.warn(e.toString());
+        }
+
+        assertEquals(ticker1, ticker2);
+    }
+
+    @Test
+    @DisplayName("Testing ticker cache expiration feature")
+    void getTickerCacheExpirationTest() {
+        Ticker ticker1 = null;
+        Ticker ticker2 = null;
+
+        try {
+            ticker1 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+        } catch (TickerServiceException e) {
+            logger.warn(e.toString());
+        }
+
+        try {
+            Thread.sleep(MarketDataBean.CACHE_VALIDITY_INTERVAL+1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            ticker2 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+        } catch (TickerServiceException e) {
+            logger.warn(e.toString());
+        }
+
+        assertNotEquals(ticker1, ticker2);
+    }
+
 }
