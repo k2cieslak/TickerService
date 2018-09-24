@@ -1,5 +1,6 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
+import org.knowm.xchange.Exchange;
 import org.knowm.xchange.anx.v2.ANXExchange;
 import org.knowm.xchange.bibox.BiboxExchange;
 import org.knowm.xchange.binance.BinanceExchange;
@@ -67,7 +68,6 @@ import org.knowm.xchange.poloniex.PoloniexExchange;
 import org.knowm.xchange.quadrigacx.QuadrigaCxExchange;
 import org.knowm.xchange.quoine.QuoineExchange;
 import org.knowm.xchange.ripple.RippleExchange;
-import org.knowm.xchange.service.marketdata.MarketDataService;
 import org.knowm.xchange.therock.TheRockExchange;
 import org.knowm.xchange.upbit.UpbitExchange;
 import org.knowm.xchange.vaultoro.VaultoroExchange;
@@ -178,9 +178,9 @@ class MarketDataRegistry {
         return exchangeSpec.keySet();
     }
 
-    static Map<String, MarketDataService> buildMarketDataSources() {
+    static Map<String, Exchange> buildMarketDataSources() {
         List<CompletableFuture<ExchangeListEntry>> exchangeThreadPool = new ArrayList<>();
-        Map<String, MarketDataService> exchanges = new HashMap<>();
+        Map<String, Exchange> exchanges = new HashMap<>();
 
         for(Map.Entry e : exchangeSpec.entrySet()) {
             MarketDataRegistryWorker marketDataRegistryWorker = new MarketDataRegistryWorker((String)e.getKey(), (Class)e.getValue());
@@ -202,8 +202,8 @@ class MarketDataRegistry {
             }
 
             //TODO keep list of greyed exchanges and try to recover
-            if(exchangeListEntry != null && exchangeListEntry.getMarketDataService() != null) {
-                exchanges.put(exchangeListEntry.getExchangeName(), exchangeListEntry.getMarketDataService());
+            if(exchangeListEntry != null && exchangeListEntry.getExchange() != null) {
+                exchanges.put(exchangeListEntry.getExchangeName(), exchangeListEntry.getExchange());
             }
         }
 

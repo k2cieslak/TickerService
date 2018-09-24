@@ -1,6 +1,7 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
 import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
+import org.knowm.xchange.Exchange;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
@@ -19,7 +20,7 @@ public class MarketDataBean {
 
     private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
     static final long CACHE_VALIDITY_INTERVAL = 10000L;
-    private final Map<String, MarketDataService> exchanges;
+    private final Map<String, Exchange> exchanges;
     private Map<String, Map<String, TimestampedTicker>> cachedTickers = new HashMap<>();
 
     public MarketDataBean() {
@@ -32,18 +33,25 @@ public class MarketDataBean {
 
     public Ticker getTicker(String exchangeName, String currencyPair) throws TickerServiceException {
 
-        MarketDataService marketDataService = exchanges.get(exchangeName);
+        Exchange exchange = exchanges.get(exchangeName);
+        MarketDataService marketDataService;
+        CurrencyPair market;
 
-        if(marketDataService == null) {
+        if(exchange == null) {
             throw new TickerServiceException("Exchange name - misspeled or not supported exchange.");
+        } else {
+            marketDataService = exchange.getMarketDataService();
+            market = parseCurrencyPair(currencyPair);
+            if(!exchange.getExchangeSymbols().contains(market)) {
+                throw new TickerServiceException(String.format("Exchange %s doesn't support %s.", exchangeName, currencyPair));
+            }
         }
 
         Ticker ticker;
         TimestampedTicker tt = getCachedTicker(exchangeName, currencyPair);
-        Ticker tickcer;
+
         if(tt == null) {
             try {
-                CurrencyPair market = parseCurrencyPair(currencyPair);
                 ticker = marketDataService.getTicker(market);
             } catch (IOException e) {
                 throw new TickerServiceException("Problem while communicating with exchange.");
@@ -51,13 +59,13 @@ public class MarketDataBean {
                 throw new TickerServiceException("Currency pair not valid for exchange.");
             }
 
-            Map<String, TimestampedTicker > exchange = cachedTickers.get(exchangeName);
-            if(exchange != null) {
+            Map<String, TimestampedTicker> exchangeCache = cachedTickers.get(exchangeName);
+            if(exchangeCache != null) {
                 tt = new TimestampedTicker(System.currentTimeMillis(), ticker);
-                if(!exchange.containsKey(currencyPair)) {
-                    exchange.put(currencyPair, tt);
+                if(!exchangeCache.containsKey(currencyPair)) {
+                    exchangeCache.put(currencyPair, tt);
                 } else {
-                    exchange.replace(currencyPair, tt);
+                    exchangeCache.replace(currencyPair, tt);
                 }
             } else {
                 Map<String, TimestampedTicker> exchangeEntries = new HashMap<>();
@@ -68,7 +76,6 @@ public class MarketDataBean {
         } else {
             ticker = tt.getTicker();
         }
-
 
         return ticker;
     }

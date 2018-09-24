@@ -30,7 +30,7 @@ public class MarketDataRegistryWorker implements Supplier<ExchangeListEntry> {
 
         try {
             Exchange exchange = ExchangeFactory.INSTANCE.createExchange(exchangeProvider.getName());
-            exchangeListEntry.setMarketDataService(exchange.getMarketDataService());
+            exchangeListEntry.setExchange(exchange);
         } catch (ExchangeException exception) {
             logger.warn(exception.getMessage(), exception);
         } catch (Exception exception) {

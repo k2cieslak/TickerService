@@ -1,11 +1,11 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
-import org.knowm.xchange.service.marketdata.MarketDataService;
+import org.knowm.xchange.Exchange;
 
 public class ExchangeListEntry {
 
     private String exchangeName;
-    private MarketDataService marketDataService;
+    private Exchange exchange;
 
     public String getExchangeName() {
         return exchangeName;
@@ -15,12 +15,12 @@ public class ExchangeListEntry {
         this.exchangeName = exchangeName;
     }
 
-    public MarketDataService getMarketDataService() {
-        return marketDataService;
+    public Exchange getExchange() {
+        return exchange;
     }
 
-    public void setMarketDataService(MarketDataService marketDataService) {
-        this.marketDataService = marketDataService;
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
     }
 }
 
