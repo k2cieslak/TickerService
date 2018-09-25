@@ -98,6 +98,15 @@ public class MarketDataBean {
         return result;
     }
 
+    public List<String> getExchangeMarkets(String exchangeName) {
+        Exchange exchange = exchanges.get(exchangeName);
+        List<String> result = new ArrayList<>();
+        for(CurrencyPair market : exchange.getExchangeSymbols()) {
+            result.add(market.toString());
+        }
+        return result;
+    }
+
     CurrencyPair parseCurrencyPair(String input) throws TickerServiceException {
         if(input != null && input.length() > 3 && input.contains("_")) {
             String[] currencies = input.split("_");
