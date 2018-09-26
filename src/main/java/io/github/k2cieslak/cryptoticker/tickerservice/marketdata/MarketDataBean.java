@@ -98,12 +98,21 @@ public class MarketDataBean {
         return result;
     }
 
-    public List<String> getExchangeMarkets(String exchangeName) {
-        Exchange exchange = exchanges.get(exchangeName);
+    public List<String> getExchangeMarkets(String exchangeName) throws TickerServiceException {
         List<String> result = new ArrayList<>();
-        for(CurrencyPair market : exchange.getExchangeSymbols()) {
-            result.add(market.toString());
+        Exchange exchange = exchanges.get(exchangeName);
+
+        if (exchange != null) {
+            for(CurrencyPair market : exchange.getExchangeSymbols()) {
+                result.add(market.toString());
+            }
+            if(result.size() ==0) {
+                throw new TickerServiceException("No market supported for requested exchange.");
+            }
+        } else {
+            throw new TickerServiceException("Exchange name misspelled or not supported.");
         }
+
         return result;
     }
 

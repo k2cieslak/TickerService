@@ -1,5 +1,6 @@
 package io.github.k2cieslak.cryptoticker.tickerservice;
 
+import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
 import io.github.k2cieslak.cryptoticker.tickerservice.marketdata.MarketDataBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class ExchangeController {
     @Produces("application/json")
     @Path("/avaliable")
     public List<String> getAvaliableExchanges() {
+
         return marketData.getAvaliableExchanges();
     }
 
@@ -28,13 +30,15 @@ public class ExchangeController {
     @Produces("application/json")
     @Path("/gray")
     public List<String> getGrayExchanges() {
+
         return marketData.getGrayExchanges();
     }
 
     @GET
     @Produces("application/json")
     @Path("/markets")
-    public List<String> getExchangeMarkets(@QueryParam("exchangeName") String exchangeName) {
+    public List<String> getExchangeMarkets(@QueryParam("exchangeName") String exchangeName) throws TickerServiceException {
+
         return marketData.getExchangeMarkets(exchangeName);
     }
 }

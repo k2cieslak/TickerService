@@ -16,6 +16,7 @@ public class MarketDataBeanTest {
 
     private static final MarketDataBean marketDataBean =  new MarketDataBean();
     private static final String COMMON_CURRENCY_PAIR = "BTC_USD";
+    private static final String EXAMPLE_EXCHANGE = "hitbtc";
     private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
 
     @Test
@@ -23,7 +24,7 @@ public class MarketDataBeanTest {
     void getTickerSmokeTest() {
         Ticker ticker = null;
         try {
-            ticker = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+            ticker = marketDataBean.getTicker(EXAMPLE_EXCHANGE, COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             logger.warn(e.toString());
         }
@@ -34,7 +35,7 @@ public class MarketDataBeanTest {
     @DisplayName("Tests exception when market is not supported on exchange")
     void getTickerForWrongMarketSymbolTest() {
         assertThrows(TickerServiceException.class,
-                () -> marketDataBean.getTicker("hitbtc", "BTC_EUR"));
+                () -> marketDataBean.getTicker(EXAMPLE_EXCHANGE, "BTC_EUR"));
     }
 
     @Test
@@ -71,13 +72,13 @@ public class MarketDataBeanTest {
         Ticker ticker2 = null;
 
         try {
-            ticker1 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+            ticker1 = marketDataBean.getTicker(EXAMPLE_EXCHANGE, COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             logger.warn(e.toString());
         }
 
         try {
-            ticker2 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+            ticker2 = marketDataBean.getTicker(EXAMPLE_EXCHANGE, COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             logger.warn(e.toString());
         }
@@ -92,7 +93,7 @@ public class MarketDataBeanTest {
         Ticker ticker2 = null;
 
         try {
-            ticker1 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+            ticker1 = marketDataBean.getTicker(EXAMPLE_EXCHANGE, COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             logger.warn(e.toString());
         }
@@ -100,12 +101,12 @@ public class MarketDataBeanTest {
         try {
             Thread.sleep(MarketDataBean.CACHE_VALIDITY_INTERVAL+1);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.warn(e.toString());
         }
 
 
         try {
-            ticker2 = marketDataBean.getTicker("hitbtc", COMMON_CURRENCY_PAIR);
+            ticker2 = marketDataBean.getTicker(EXAMPLE_EXCHANGE, COMMON_CURRENCY_PAIR);
         } catch (TickerServiceException e) {
             logger.warn(e.toString());
         }
@@ -113,4 +114,32 @@ public class MarketDataBeanTest {
         assertNotEquals(ticker1, ticker2);
     }
 
+    @Test
+    @DisplayName("Get avaliable exchanges smoke test")
+    void getAvaliableExchangesSmokeTest() {
+        assertNotNull(marketDataBean.getAvaliableExchanges());
+    }
+
+    @Test
+    @DisplayName("Get gray exchanges smoke test")
+    void getGrayExchangesSmokeTest() {
+        assertNotNull(marketDataBean.getGrayExchanges());
+    }
+
+    @Test
+    @DisplayName("Get exchange markets smoke test")
+    void getExchangeMarketsSmokeTest() {
+        try {
+            assertNotNull(marketDataBean.getExchangeMarkets(EXAMPLE_EXCHANGE));
+        } catch (TickerServiceException e) {
+            logger.warn(e.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("Get exchange markets for wrong exchange name")
+    void getExchangeMarketsForWrongExchangeNameTest() {
+        assertThrows(TickerServiceException.class,
+                () -> marketDataBean.getExchangeMarkets("xxx"));
+    }
 }
