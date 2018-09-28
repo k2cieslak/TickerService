@@ -1,4 +1,4 @@
-package io.github.k2cieslak.cryptoticker.tickerservice;
+package io.github.k2cieslak.cryptoticker.tickerservice.controller;
 
 import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
 import io.github.k2cieslak.cryptoticker.tickerservice.marketdata.MarketDataBean;

@@ -51,28 +51,7 @@ public class MarketDataBean {
         TimestampedTicker tt = getCachedTicker(exchangeName, currencyPair);
 
         if(tt == null) {
-            try {
-                ticker = marketDataService.getTicker(market);
-            } catch (IOException e) {
-                throw new TickerServiceException("Problem while communicating with exchange.");
-            } catch (CurrencyPairNotValidException currencyPairNotValidException) {
-                throw new TickerServiceException("Currency pair not valid for exchange.");
-            }
-
-            Map<String, TimestampedTicker> exchangeCache = cachedTickers.get(exchangeName);
-            if(exchangeCache != null) {
-                tt = new TimestampedTicker(System.currentTimeMillis(), ticker);
-                if(!exchangeCache.containsKey(currencyPair)) {
-                    exchangeCache.put(currencyPair, tt);
-                } else {
-                    exchangeCache.replace(currencyPair, tt);
-                }
-            } else {
-                Map<String, TimestampedTicker> exchangeEntries = new HashMap<>();
-                tt = new TimestampedTicker(System.currentTimeMillis(), ticker);
-                exchangeEntries.put(currencyPair, tt);
-                cachedTickers.put(exchangeName, exchangeEntries);
-            }
+            ticker = getTickerFromMarket(marketDataService, market, exchangeName, currencyPair);
         } else {
             ticker = tt.getTicker();
         }
@@ -106,7 +85,7 @@ public class MarketDataBean {
             for(CurrencyPair market : exchange.getExchangeSymbols()) {
                 result.add(market.toString());
             }
-            if(result.size() ==0) {
+            if(result.isEmpty()) {
                 throw new TickerServiceException("No market supported for requested exchange.");
             }
         } else {
@@ -136,5 +115,35 @@ public class MarketDataBean {
             }
         }
         return null;
+    }
+
+    private Ticker getTickerFromMarket(MarketDataService marketDataService, CurrencyPair market,
+                                       String exchangeName, String currencyPair) throws TickerServiceException {
+        Ticker ticker;
+        TimestampedTicker tt;
+        try {
+            ticker = marketDataService.getTicker(market);
+        } catch (IOException e) {
+            throw new TickerServiceException("Problem while communicating with exchange.");
+        } catch (CurrencyPairNotValidException currencyPairNotValidException) {
+            throw new TickerServiceException("Currency pair not valid for exchange.");
+        }
+
+        Map<String, TimestampedTicker> exchangeCache = cachedTickers.get(exchangeName);
+        if(exchangeCache != null) {
+            tt = new TimestampedTicker(System.currentTimeMillis(), ticker);
+            if(!exchangeCache.containsKey(currencyPair)) {
+                exchangeCache.put(currencyPair, tt);
+            } else {
+                exchangeCache.replace(currencyPair, tt);
+            }
+        } else {
+            Map<String, TimestampedTicker> exchangeEntries = new HashMap<>();
+            tt = new TimestampedTicker(System.currentTimeMillis(), ticker);
+            exchangeEntries.put(currencyPair, tt);
+            cachedTickers.put(exchangeName, exchangeEntries);
+        }
+
+        return ticker;
     }
 }
