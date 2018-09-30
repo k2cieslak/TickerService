@@ -3,6 +3,9 @@ spring:
     name: CryptoTickerService
 server:
   port: 8081
+  error:
+    whitelabel:
+      enabled: false
 logging:
   level:
     si.mazi.rescu: ERROR
