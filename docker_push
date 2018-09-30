@@ -1,4 +1,4 @@
 #!/bin/bash
 echo TEST!!!
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker push USER/REPO hub.docker.com
+docker push k2cieslak/tickerservice hub.docker.com
