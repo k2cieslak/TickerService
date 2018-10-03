@@ -28,11 +28,11 @@ public class JerseyConfig extends ResourceConfig {
         this.register(SwaggerSerializers.class);
 
         BeanConfig config = new BeanConfig();
-        config.setConfigId("springboot-jersey-swagger-docker-example");
-        config.setTitle("Spring Boot + Jersey + Swagger + Docker Example");
+        config.setConfigId("CryptoTickerService");
+        config.setTitle("Crypto Ticker Service REST API");
         config.setVersion("v1");
-        config.setContact("Orlando L Otero");
-        config.setSchemes(new String[]{"http", "https"});
+        config.setContact("Krzysztof Cieslak");
+        config.setSchemes(new String[]{"http"});
         config.setBasePath("/api");
         config.setResourcePackage("io.github.k2cieslak.cryptoticker.tickerservice.controller");
         config.setPrettyPrint(true);

@@ -26,10 +26,10 @@ public class ExchangeController {
     @GET
     @Produces("application/json")
     @Path("/avaliable")
-    @ApiOperation(value = "Gets a hello resource. Version 1 - (version in URL)", response = List.class)
+    @ApiOperation(value = "Gets list of available exchanges.", response = List.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "hello resource found"),
-            @ApiResponse(code = 404, message = "Given admin user not found")
+            @ApiResponse(code = 200, message = "List of exchange codes."),
+            @ApiResponse(code = 404, message = "Exception during method call.")
     })
     public List<String> getAvaliableExchanges() {
 
@@ -39,10 +39,12 @@ public class ExchangeController {
     @GET
     @Produces("application/json")
     @Path("/gray")
-    @ApiOperation(value = "Gets a hello resource. Version 1 - (version in URL)", response = List.class)
+    @ApiOperation(value = "Gets list of exchanges that service was not able to initialize.",
+                    response = List.class,
+                    responseContainer = "List" )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "hello resource found"),
-            @ApiResponse(code = 404, message = "Given admin user not found")
+            @ApiResponse(code = 200, message = "List of exchange codes."),
+            @ApiResponse(code = 404, message = "Exception during method call.")
     })
     public List<String> getGrayExchanges() {
 
@@ -52,10 +54,12 @@ public class ExchangeController {
     @GET
     @Produces("application/json")
     @Path("/markets")
-    @ApiOperation(value = "Gets a hello resource. Version 1 - (version in URL)", response = List.class)
+    @ApiOperation(value = "Gets List of available markets for a given exchange.",
+                    response = List.class,
+                    responseContainer = "List")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "hello resource found"),
-            @ApiResponse(code = 404, message = "Given admin user not found")
+            @ApiResponse(code = 200, message = "List of market codes."),
+            @ApiResponse(code = 404, message = "Exception during method call.")
     })
     public List<String> getExchangeMarkets(@QueryParam("exchangeName") String exchangeName) throws TickerServiceException {
 

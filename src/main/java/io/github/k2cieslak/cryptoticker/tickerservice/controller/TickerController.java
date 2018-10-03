@@ -2,6 +2,7 @@ package io.github.k2cieslak.cryptoticker.tickerservice.controller;
 
 import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
 import io.github.k2cieslak.cryptoticker.tickerservice.marketdata.MarketDataBean;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -13,11 +14,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import java.util.List;
 
 
 @Component
 @Path("/ticker")
+@Api(value = "Ticker data", produces = "application/json")
 public class TickerController {
 
     @Autowired
@@ -25,10 +26,10 @@ public class TickerController {
 
     @GET
     @Produces("application/json")
-    @ApiOperation(value = "Gets a hello resource. Version 1 - (version in URL)", response = Ticker.class)
+    @ApiOperation(value = "Get current ticker for given exchange code and market code.)", response = Ticker.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "hello resource found"),
-            @ApiResponse(code = 404, message = "Given admin user not found")
+            @ApiResponse(code = 200, message = "Current ticker codes."),
+            @ApiResponse(code = 404, message = "Exception during method call.")
     })
     public Ticker getTicker(@QueryParam("exchangeName") String exchangeName, @QueryParam("currencyPair")String currencyPair) throws TickerServiceException {
         return marketData.getTicker(exchangeName, currencyPair);
