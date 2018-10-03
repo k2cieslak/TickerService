@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class MarketDataBeanTest {
 
     private static final MarketDataBean marketDataBean =  new MarketDataBean();
-    private static final String COMMON_CURRENCY_PAIR = "BTC_USD";
+    private static final String COMMON_CURRENCY_PAIR = "BTC/USD";
     private static final String EXAMPLE_EXCHANGE = "hitbtc";
     private static final Logger logger = LoggerFactory.getLogger(MarketDataBean.class);
 
@@ -35,7 +35,7 @@ public class MarketDataBeanTest {
     @DisplayName("Tests exception when market is not supported on exchange")
     void getTickerForWrongMarketSymbolTest() {
         assertThrows(TickerServiceException.class,
-                () -> marketDataBean.getTicker(EXAMPLE_EXCHANGE, "BTC_EUR"));
+                () -> marketDataBean.getTicker(EXAMPLE_EXCHANGE, "BTC/EUR"));
     }
 
     @Test
@@ -43,26 +43,6 @@ public class MarketDataBeanTest {
     void getTickerForWrongExchangeSymbolTest() {
         assertThrows(TickerServiceException.class,
                 () -> marketDataBean.getTicker("xxx", COMMON_CURRENCY_PAIR));
-    }
-
-    @Test
-    @DisplayName("Currency pair converter :: Happy case for ")
-    void parseCurrencyPairSmokeTest() {
-        CurrencyPair currencyPair = null;
-        try {
-            currencyPair = marketDataBean.parseCurrencyPair(COMMON_CURRENCY_PAIR);
-        } catch (TickerServiceException e) {
-            logger.warn(e.toString());
-        }
-        assertEquals(CurrencyPair.BTC_USD, currencyPair);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = { "", "BTCUSD", "BTC_USD_RPG", "_", "______" })
-    @DisplayName("Currency pair converter :: malformed inputs")
-    void parseCurrencyPairMalformedInputTest(String input) {
-        assertThrows(TickerServiceException.class,
-                () -> marketDataBean.parseCurrencyPair(input));
     }
 
     @Test

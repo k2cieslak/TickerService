@@ -41,7 +41,7 @@ public class MarketDataBean {
             throw new TickerServiceException("Exchange name - misspeled or not supported exchange.");
         } else {
             marketDataService = exchange.getMarketDataService();
-            market = parseCurrencyPair(currencyPair);
+            market = new CurrencyPair(currencyPair);
             if(!exchange.getExchangeSymbols().contains(market)) {
                 throw new TickerServiceException(String.format("Exchange %s doesn't support %s.", exchangeName, currencyPair));
             }
@@ -93,17 +93,6 @@ public class MarketDataBean {
         }
 
         return result;
-    }
-
-    CurrencyPair parseCurrencyPair(String input) throws TickerServiceException {
-        if(input != null && input.length() > 3 && input.contains("_")) {
-            String[] currencies = input.split("_");
-            if(currencies.length == 2) {
-                Currency base = new Currency(currencies[0]);
-                Currency counter = new Currency(currencies[1]);
-                return new CurrencyPair(base, counter);
-            } else throw new TickerServiceException("Currency pair - wrong format.");
-        } else throw new TickerServiceException("Currency pair - wrong format.");
     }
 
     private TimestampedTicker getCachedTicker(String exchangeName, String currencyPair) {
