@@ -32,6 +32,13 @@ public class MarketDataBeanTest {
     }
 
     @Test
+    @DisplayName("Get ticker for not exisiting market")
+    void getTickerForNotExisitingMarketTest() {
+        assertThrows(TickerServiceException.class,
+                () -> marketDataBean.getTicker(EXAMPLE_EXCHANGE, "BTC/EUR"));
+    }
+
+    @Test
     @DisplayName("Tests exception when market is not supported on exchange")
     void getTickerForWrongMarketSymbolTest() {
         assertThrows(TickerServiceException.class,

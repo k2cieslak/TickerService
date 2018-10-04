@@ -201,7 +201,6 @@ class MarketDataRegistry {
                 LOGGER.error(e.toString(), e);
             }
 
-            //TODO keep list of greyed exchanges and try to recover
             if(exchangeListEntry != null && exchangeListEntry.getExchange() != null) {
                 exchanges.put(exchangeListEntry.getExchangeName(), exchangeListEntry.getExchange());
             }

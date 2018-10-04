@@ -2,7 +2,6 @@ package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
 import io.github.k2cieslak.cryptoticker.tickerservice.exception.TickerServiceException;
 import org.knowm.xchange.Exchange;
-import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.marketdata.Ticker;
 import org.knowm.xchange.exceptions.CurrencyPairNotValidException;
@@ -84,9 +83,6 @@ public class MarketDataBean {
         if (exchange != null) {
             for(CurrencyPair market : exchange.getExchangeSymbols()) {
                 result.add(market.toString());
-            }
-            if(result.isEmpty()) {
-                throw new TickerServiceException("No market supported for requested exchange.");
             }
         } else {
             throw new TickerServiceException("Exchange name misspelled or not supported.");
