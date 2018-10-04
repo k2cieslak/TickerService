@@ -15,11 +15,11 @@ info:
     name: CryptoTickerService
     description: REST endopint giving access to tickers on crypto exchanges supported by XChange project
     version: 0.1 (alpha)
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
