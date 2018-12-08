@@ -1,6 +1,7 @@
 package io.github.k2cieslak.cryptoticker.tickerservice.marketdata;
 
 import org.knowm.xchange.Exchange;
+import org.knowm.xchange.acx.AcxExchange;
 import org.knowm.xchange.anx.v2.ANXExchange;
 import org.knowm.xchange.bibox.BiboxExchange;
 import org.knowm.xchange.binance.BinanceExchange;
@@ -16,6 +17,7 @@ import org.knowm.xchange.bitso.BitsoExchange;
 import org.knowm.xchange.bitstamp.BitstampExchange;
 import org.knowm.xchange.bittrex.BittrexExchange;
 import org.knowm.xchange.bity.BityExchange;
+import org.knowm.xchange.bitz.BitZExchange;
 import org.knowm.xchange.bleutrade.BleutradeExchange;
 import org.knowm.xchange.btcc.BTCCExchange;
 import org.knowm.xchange.btcmarkets.BTCMarketsExchange;
@@ -30,6 +32,7 @@ import org.knowm.xchange.coinbase.CoinbaseExchange;
 import org.knowm.xchange.coinbasepro.CoinbaseProExchange;
 import org.knowm.xchange.coinbene.CoinbeneExchange;
 import org.knowm.xchange.coindirect.CoindirectExchange;
+import org.knowm.xchange.coinegg.CoinEggExchange;
 import org.knowm.xchange.coinfloor.CoinfloorExchange;
 import org.knowm.xchange.coingi.CoingiExchange;
 import org.knowm.xchange.coinmarketcap.CoinMarketCapExchange;
@@ -75,11 +78,8 @@ import org.knowm.xchange.vircurex.VircurexExchange;
 import org.knowm.xchange.wex.v3.WexExchange;
 import org.knowm.xchange.yobit.YoBitExchange;
 import org.knowm.xchange.zaif.ZaifExchange;
-import org.known.xchange.acx.AcxExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xchange.bitz.BitZExchange;
-import org.xchange.coinegg.CoinEggExchange;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
