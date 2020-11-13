@@ -6,7 +6,7 @@
 
     <groupId>io.github.k2cieslak.cryptoticker</groupId>
     <artifactId>TickerService</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>CryptoTickerService</name>
@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.5.RELEASE</version>
+        <version>2.3.5.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -32,13 +32,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <docker.image.prefix>springio</docker.image.prefix>
-        <xchange.lib.version>4.3.13</xchange.lib.version>
+        <xchange.lib.version>5.0.3</xchange.lib.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jersey</artifactId>
+            <version>2.3.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -98,7 +99,7 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jersey2-jaxrs</artifactId>
-            <version>1.5.21</version>
+            <version>1.6.2</version>
         </dependency>
         <!-- EXCHANGES -->
         <dependency>
@@ -108,12 +109,7 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-acx</artifactId>
-            <version>${xchange.lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-anx</artifactId>
+            <artifactId>xchange-bankera</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -139,6 +135,12 @@
         <dependency>
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-bitcoincharts</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <!-- TBD Connects to bitcoin core network (not used now)-->
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-bitcoincore</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -168,7 +170,7 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-bitmarket</artifactId>
+            <artifactId>xchange-bithumb</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -203,6 +205,11 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-bl3p</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-bleutrade</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
@@ -231,15 +238,15 @@
             <artifactId>xchange-btcturk</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
-        <dependency>
+        <dependency> <!-- TBD WTF? -->
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-bx</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
-        <dependency>
+        <dependency> <!-- TBD WTF? -->
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-campbx</artifactId>
-            <version>${xchange.lib.version}</version>
+            <version>5.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
@@ -273,12 +280,22 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-coindeal</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-coindirect</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-coinegg</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-coinex</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -328,7 +345,32 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-cryptowatch</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-deribit</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-dragonex</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-dsx</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-dvchain</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-enigma</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -348,17 +390,17 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-gatecoin</artifactId>
-            <version>${xchange.lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-gateio</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-gemini</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-globitex</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -418,7 +460,12 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-liqui</artifactId>
+            <artifactId>xchange-latoken</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-lgo</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -429,6 +476,11 @@
         <dependency>
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-luno</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-lykke</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
@@ -463,11 +515,6 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-quadrigacx</artifactId>
-            <version>${xchange.lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-quoine</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
@@ -483,6 +530,11 @@
         </dependency>
         <dependency>
             <groupId>org.knowm.xchange</groupId>
+            <artifactId>xchange-tradeogre</artifactId>
+            <version>${xchange.lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-truefx</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
@@ -494,16 +546,6 @@
         <dependency>
             <groupId>org.knowm.xchange</groupId>
             <artifactId>xchange-vaultoro</artifactId>
-            <version>${xchange.lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-vircurex</artifactId>
-            <version>${xchange.lib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.knowm.xchange</groupId>
-            <artifactId>xchange-wex</artifactId>
             <version>${xchange.lib.version}</version>
         </dependency>
         <dependency>
